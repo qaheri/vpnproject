@@ -5,6 +5,8 @@ import os
 import wget
 import requests
 import json
+import subprocess
+
 
 # stringReadFromFile = open("userdata.json", 'r').read()
 # jsonDict = json.loads(stringReadFromFile)
@@ -118,7 +120,20 @@ def upHandler(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Fuck off")
 
 def create_user():
-    os.system("")
+    inn = str(input("username,password:\n"))
+    username = inn.split(',')[0]
+    password = inn.split(',')[1]
+    sudo_password = ""
+
+    command = "useradd -p "+encPass+" "+username+" --shell=/bin/false"
+    command = command.split()
+
+    cmd1 = subprocess.Popen(['echo',sudo_password], stdout=subprocess.PIPE)
+    cmd2 = subprocess.Popen(['sudo'] + command, stdin = cmd1.stdout, stdout = subprocess.PIPE)
+
+    output = cmd2.stdout.read().decode()
+    print(output)
+
 
 updater = Updater(token=TOKEN, use_context=True)
 
