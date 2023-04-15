@@ -4,7 +4,7 @@ import string
 import os
 import datetime
 
-sudo_password="32388261Aa"
+sudo_password=""
 u=input("enter username: ")
 e=int(input("enter expire: "))
 def create_user(username, expire):
