@@ -6,7 +6,8 @@ import wget
 import requests
 import json
 import subprocess
-
+import random
+import string
 
 # stringReadFromFile = open("userdata.json", 'r').read()
 # jsonDict = json.loads(stringReadFromFile)
@@ -21,6 +22,7 @@ os.environ['HTTPS_PROXY'] = proxy
 TOKEN = ""
 admins = ['130962237', '72395599']
 project_name = "vpn project"
+sudo_password = ""
 
 def start(update, context):
     main_keyboard = [[telegram.KeyboardButton("Wallet"),telegram.KeyboardButton("Subscription")],
@@ -119,12 +121,14 @@ def upHandler(update, context):
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Fuck off")
 
-def create_user():
-    inn = str(input("username,password:\n"))
-    username = inn.split(',')[0]
-    password = inn.split(',')[1]
-    sudo_password = ""
-
+def create_user(username, password, traffic, expire):
+    # inn = str(input("username,password:\n"))
+    letters = string.digits
+    result_str = ''.join(random.choice(letters) for i in range(8))
+    
+    username = update.effective_chat.id
+    password = result_str
+    
     command = "useradd -p "+encPass+" "+username+" --shell=/bin/false"
     command = command.split()
 
