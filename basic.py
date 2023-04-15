@@ -13,13 +13,16 @@ def create_user(username, expire):
     
     password = result_str
     
-    command = "useradd -p "+password+" "+username+" --shell=/bin/false"
-    command = command.split()
+    # command = "useradd -p "+password+" "+username+" --shell=/bin/false"
+    # command = command.split()
 
-    cmd1 = subprocess.Popen(['echo',sudo_password], stdout=subprocess.PIPE)
-    cmd2 = subprocess.Popen(['sudo'] + command, stdin = cmd1.stdout, stdout = subprocess.PIPE)
-    output = cmd2.stdout.read().decode()
-    print(output)
+    # cmd1 = subprocess.Popen(['echo',sudo_password], stdout=subprocess.PIPE)
+    # cmd2 = subprocess.Popen(['sudo'] + command, stdin = cmd1.stdout, stdout = subprocess.PIPE)
+    # output = cmd2.stdout.read().decode()
+    # print(output)
+
+    subprocess.run(['sudo', 'useradd', '-p', password, username, '--shell=/bin/false'])
+
     expiration_date = datetime.date.today() + datetime.timedelta(days=expire)
 
 # Format the expiration date as YYYY-MM-DD
