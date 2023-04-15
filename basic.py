@@ -15,8 +15,6 @@ def create_user(username, expire):
     
     command = "useradd -p "+password+" "+username+" --shell=/bin/false"
     command = command.split()
-    command2 = "useradd -p "+password+" "+username+" --shell=/bin/false"    'chage -E $(date -d "+'+expire'
-    command2 = command.split()
 
     cmd1 = subprocess.Popen(['echo',sudo_password], stdout=subprocess.PIPE)
     cmd2 = subprocess.Popen(['sudo'] + command, stdin = cmd1.stdout, stdout = subprocess.PIPE)
