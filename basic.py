@@ -2,6 +2,7 @@ import subprocess
 import random
 import string
 import os
+import datetime
 
 sudo_password="32388261Aa"
 
@@ -14,12 +15,25 @@ def create_user(username, expire):
     
     command = "useradd -p "+password+" "+username+" --shell=/bin/false"
     command = command.split()
+    command2 = "useradd -p "+password+" "+username+" --shell=/bin/false"    'chage -E $(date -d "+'+expire'
+    command2 = command.split()
 
     cmd1 = subprocess.Popen(['echo',sudo_password], stdout=subprocess.PIPE)
     cmd2 = subprocess.Popen(['sudo'] + command, stdin = cmd1.stdout, stdout = subprocess.PIPE)
-
     output = cmd2.stdout.read().decode()
     print(output)
-    os.system(f'sudo chage -E $(date -d "+{expire} days" +%Y-%m-%d) {username}')
-    
+    expiration_date = datetime.date.today() + datetime.timedelta(days=expire)
+
+# Format the expiration date as YYYY-MM-DD
+    expiration_date_str = expiration_date.strftime('%Y-%m-%d')
+
+# Run the chage command with sudo to set the expiration date for the account
+    result = subprocess.run(['sudo', 'chage', '-E', expiration_date_str, username])
+
+    if result.returncode == 0:
+        print(f"Successfully disabled account '{username}' after 30 days.")
+    else:
+        print(f"Failed to disable account '{username}':")
+        print(result.stderr)
+
 create_user(username=input("enter username: ", expire=input("enter expire: ")))
