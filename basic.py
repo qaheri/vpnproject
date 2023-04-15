@@ -6,7 +6,7 @@ import datetime
 
 sudo_password="32388261Aa"
 u=input("enter username: ")
-e=input("enter expire: ")
+e=int(input("enter expire: "))
 def create_user(username, expire):
     # inn = str(input("username,password:\n"))
     letters = string.digits
@@ -37,5 +37,7 @@ def create_user(username, expire):
     else:
         print(f"Failed to disable account '{username}':")
         print(result.stderr)
+
+    print(f"password: {password}")
 
 create_user(username=u, expire=e)
